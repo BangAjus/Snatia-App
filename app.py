@@ -1,9 +1,13 @@
 import streamlit as st
-import sklearn
-import pickle
 from pickle import load
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.svm import LinearSVC
+import nltk
+nltk.download('stopwords')
+from nltk.tokenize import RegexpTokenizer
+from nltk.stem import SnowballStemmer
+from nltk.corpus import stopwords
+from re import findall
 
 st.title('Diagnosing Disease')
 st.header('You can diagnose your disease here and we can give you the result!')
@@ -14,11 +18,6 @@ symptom = st.text_input(labell)
 prohibit = [labell, ""]
 
 def preprocess_sentences(string):
-
-    from nltk.tokenize import RegexpTokenizer
-    from nltk.stem import SnowballStemmer
-    from nltk.corpus import stopwords
-    from re import findall
 
     string = string.lower()
 
