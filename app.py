@@ -1,6 +1,7 @@
 import streamlit as st
-import json
 from pickle import load
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.svm import LinearSVC
 
 st.title('Diagnosing Disease')
 st.header('You can diagnose your disease here and we can give you the result!')
