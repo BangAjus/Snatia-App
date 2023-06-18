@@ -54,7 +54,7 @@ def run():
     sent = " ".join(sent)
     prediksi = l.inverse_transform(m.predict(t.transform(c.transform([sent]))))[0]
 
-    st.header(f'Prediction result : {result["prediksi"]}')
+    st.header(f'Prediction result : {prediksi}')
 
 if st.button('Klik'):
 
