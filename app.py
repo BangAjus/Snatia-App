@@ -1,4 +1,6 @@
 import streamlit as st
+import sklearn
+import pickle
 from pickle import load
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.svm import LinearSVC
