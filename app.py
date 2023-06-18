@@ -50,9 +50,6 @@ def run():
     l = load(open('label.pkl', 'rb'))
     m = load(open('model.pkl', 'rb'))
 
-    data = json.load(open('data.json', 'r'))
-    lenn = json.load(open('len.json', 'r'))
-
     sent = symptom
     sent = preprocess_sentences(sent)
     sent = " ".join(sent)
