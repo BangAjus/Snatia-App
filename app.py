@@ -1,8 +1,6 @@
 import streamlit as st
 import json
 from pickle import load
-import json
-import mysql.connector
 
 st.title('Diagnosing Disease')
 st.header('You can diagnose your disease here and we can give you the result!')
@@ -11,13 +9,6 @@ st.header('Type your symptoms')
 labell = 'e.g I have a headache'
 symptom = st.text_input(labell)
 prohibit = [labell, ""]
-
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="",
-  database="snatia"
-)
 
 def preprocess_sentences(string):
 
@@ -43,8 +34,6 @@ def preprocess_sentences(string):
 
     return string
 
-
-
 keluhan = ['I am so anxious and i often panic',
            'I am so stressed because of the problem which hit me',
            'dad has been coughing for 4 hour',
@@ -61,33 +50,14 @@ def run():
     data = json.load(open('data.json', 'r'))
     lenn = json.load(open('len.json', 'r'))
 
-    sent = data['keluhan']
+    sent = symptom
     sent = preprocess_sentences(sent)
     sent = " ".join(sent)
     prediksi = l.inverse_transform(m.predict(t.transform(c.transform([sent]))))[0]
-
-    predict = {"prediksi":prediksi}
-
-    id = lenn['panjang'] + 1
-
-    mycursor = mydb.cursor()
-    sql = """INSERT INTO prediksi(`id_keluhan`, `keluhan`, `prediksi`) VALUES (%s, %s, %s)"""
-    val = (id, data['keluhan'], prediksi)
-
-    json.dump({"panjang":id}, open('len.json', 'w'), indent=2)
-
-    mycursor.execute(sql, val)
-    mydb.commit()
-
-    json.dump(predict, open('prediksi.json', 'w'), indent=2)
-
-    result = json.load(open('prediksi.json', 'r'))
 
     st.header(f'Prediction result : {result["prediksi"]}')
 
 if st.button('Klik'):
 
     if symptom not in prohibit:
-        js = {'keluhan':symptom}
-        json.dump(js, open('data.json', 'w'), indent=2)
         run()
